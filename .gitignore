@@ -170,21 +170,6 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-### Java ###
-# Compiled class file
-
-# Log file
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-
-# Package Files #
-*.zip
-*.tar.gz
-*.rar
-
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
 ### Gradle ###
