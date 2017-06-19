@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:paddingTop="60dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="Hi, Sun" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:paddingTop="90dp"
+        android:gravity="left"
+        android:textSize="18dp"
+        android:text="I'll tel you a secret. you know when you have to sign in to websites of the UT?
+        \nYou always have to fill in an email adres of the UT and it acctually doesn't
+                \nmatter who's it is. You just have to make sure that after that your student
+                 \nnumber and password are correct. And I always use your email cause it is the shortest I know..."/>
+
+</LinearLayout>
