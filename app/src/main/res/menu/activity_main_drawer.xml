@@ -4,19 +4,22 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="Home" />
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_profile"
-            android:title="Profile" />
+            android:title="@string/menu_profile" />
         <item
             android:id="@+id/nav_history"
-            android:title="Purchase History" />
+            android:title="@string/menu_purchase_history" />
         <item
             android:id="@+id/nav_calendar"
-            android:title="Calendar" />
+            android:title="@string/menu_calendar" />
         <item
             android:id="@+id/nav_change_password"
-            android:title="Change Password" />
+            android:title="@string/menu_change_password" />
+        <item
+            android:id="@+id/nav_login"
+            android:title="@string/menu_login" />
     </group>
 
 
