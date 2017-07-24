@@ -138,8 +138,8 @@ public class CalendarEntry {
                                 event.getLong("start"),
                                 event.getLong("end"),
                                 event.getString("location"),
-                                event.getBoolean("current"),
-                                event.getBoolean("over")
+                                ((event.has("current"))?event.getBoolean("current"):false),
+                                ((event.has("over"))?event.getBoolean("over"):true)
                         );
                         calendarEntries.add(calendarEntry);
                     }

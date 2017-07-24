@@ -1,19 +1,17 @@
 package com.proto;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -25,6 +23,8 @@ public class AllEventsFragment extends ListFragment
     CalendarEntry.CalendarListAdapter adapter;
     // The search view for filtering
     View listContainer;
+
+    SwipeRefreshLayout refreshLayout;
 
     public AllEventsFragment() {
         // Required empty public constructor
@@ -46,8 +46,6 @@ public class AllEventsFragment extends ListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // URL: "https://www.proto.utwente.nl/api/events/upcoming"
-
         listContainer = getListView();
 
         // Create a progress bar.
@@ -59,6 +57,16 @@ public class AllEventsFragment extends ListFragment
         progressBar.setIndeterminate(true);
 
         getListView().setEmptyView(view.findViewById(R.id.emptyElement));
+
+        // Register onRefresh
+        final AllEventsFragment allEventsFragment = this;
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                getLoaderManager().initLoader(0, null, allEventsFragment).forceLoad();
+            }
+        });
 
         // Create new cursor adapter which we will fill with the display data
         adapter = new CalendarEntry.CalendarListAdapter(getActivity());
@@ -78,7 +86,16 @@ public class AllEventsFragment extends ListFragment
      * @return a new loader for calendar entries.
      */
     @Override public Loader<List<CalendarEntry>> onCreateLoader(int id, Bundle args) {
-        return new CalendarEntry.CalendarListLoader(getActivity(), "https://www.proto.utwente.nl/api/events");
+        Uri.Builder uri = new Uri.Builder();
+        uri.scheme("https")
+                .authority("peterv.dev.saproto.nl")
+                .appendPath("api")
+                .appendPath("events")
+                .appendQueryParameter("username", "yolouser")
+                .appendQueryParameter("password", "yoloswak")
+                .appendQueryParameter("start", Long.toString(1323190800))
+                .appendQueryParameter("count", Integer.toString(5));
+        return new CalendarEntry.CalendarListLoader(getActivity(), (uri.build()).toString());
     }
 
     @Override public void onLoadFinished(Loader<List<CalendarEntry>> loader,
@@ -94,10 +111,16 @@ public class AllEventsFragment extends ListFragment
         if (entries.isEmpty()) {
             adapter.setData(null);
         }
+
+        refreshLayout.setRefreshing(false);
     }
 
     @Override public void onLoaderReset(Loader<List<CalendarEntry>> loader) {
         adapter.setData(null);
+    }
+
+    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
+
     }
 
     boolean isListShown = false;
