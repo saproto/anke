@@ -11,12 +11,12 @@
         android:layout_height="match_parent">
 
     </android.support.v4.widget.SwipeRefreshLayout>
-    <CalendarView
-        android:dateTextAppearance="@style/WhiteText"
-        android:weekDayTextAppearance="@style/WhiteText"
+
+    <com.tyczj.extendedcalendarview.ExtendedCalendarView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/calendarView"
-        >
-    </CalendarView>
+        android:layout_height="match_parent"
+        android:id="@+id/calendar">
+
+    </com.tyczj.extendedcalendarview.ExtendedCalendarView>
+
 </FrameLayout>
