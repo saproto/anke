@@ -1,14 +1,21 @@
 package com.proto;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.tyczj.extendedcalendarview.CalendarProvider;
+import com.tyczj.extendedcalendarview.Event;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,10 +30,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
+import static com.proto.R.drawable.calendar;
 
 /**
  * This class holds the data for a calendar entry.
@@ -51,7 +63,11 @@ public class CalendarEntry {
         this.location = location;
 
         this.startDate = new Date(start * 1000);
-        this.endDate = new Date(end * 1000);
+        Log.d("sartDate", String.valueOf(startDate));
+        Log.d("start", String.valueOf(start));
+
+        this.endDate = new Date(end);
+        Log.d("endDate", String.valueOf(endDate));
 
         this.current = current;
         this.over = over;
@@ -87,6 +103,16 @@ public class CalendarEntry {
         public CalendarListLoader(Context context, String urlToLoad) {
             super(context);
             this.urlToLoad = urlToLoad;
+
+
+            if(!MainActivity.SQLDeleted) {
+                //deletes all the items out of the SQL Database
+                Uri uridel = Uri.parse("content://com.tyczj.extendedcalendarview.calendarprovider/events");
+                String selection = "start_day>=?";
+                String[] selectionArgs = {"2458000"};
+                getContext().getContentResolver().delete(uridel, selection, selectionArgs);
+                MainActivity.SQLDeleted = true;
+            }
         }
 
         /**
@@ -97,6 +123,8 @@ public class CalendarEntry {
          */
         @Override
         public List<CalendarEntry> loadInBackground() {
+
+
             String response = null;
             // Open connection and catch result.
             try {
@@ -152,10 +180,60 @@ public class CalendarEntry {
 
             // Sort the list
             Collections.sort(calendarEntries, DATE_COMPARATOR);
-
+            FillSQLCalendar(calendarEntries);
             return calendarEntries;
         }
+        public void FillSQLCalendar(List<CalendarEntry> calendarEntriesSQL){
+            int length = calendarEntriesSQL.size();
+            Calendar c = Calendar.getInstance();
+
+            //adds the new events to in the SQL Database
+            for (int index = 0; index<length; index++ ) {
+                // get the start date and end date from the calendar items
+                CalendarEntry calendarEntry = calendarEntriesSQL.get(index);
+                c.setTime(calendarEntry.startDate);
+                int startDay = c.get(Calendar.DAY_OF_MONTH);
+                int startMonth= c.get(Calendar.MONTH);
+                int startHour = c.get(Calendar.HOUR_OF_DAY);
+                int startMinute = c.get(Calendar.MINUTE);
+                int startYear = c.get(Calendar.YEAR);
+
+                c.setTime(calendarEntry.endDate);
+                int endDay = c.get(Calendar.DAY_OF_MONTH);
+                int endMonth= c.get(Calendar.MONTH);
+                int endHour = c.get(Calendar.HOUR_OF_DAY);
+                int endMinute = c.get(Calendar.MINUTE);
+                int endYear = c.get(Calendar.YEAR);
+
+                ContentValues values = new ContentValues();
+                values.put(CalendarProvider.COLOR, Event.COLOR_RED);
+                values.put(CalendarProvider.DESCRIPTION, calendarEntry.description);
+                values.put(CalendarProvider.LOCATION, calendarEntry.location);
+                values.put(CalendarProvider.EVENT, calendarEntry.title);
+
+                Calendar cal = Calendar.getInstance();
+                TimeZone tz = TimeZone.getDefault();
+                cal.set(startYear,startMonth , startDay, startHour, startMinute);
+                int julianDay = Time.getJulianDay(cal.getTimeInMillis(), TimeUnit.MILLISECONDS.toSeconds(tz.getOffset(cal.getTimeInMillis())));
+                values.put(CalendarProvider.START, cal.getTimeInMillis());
+                values.put(CalendarProvider.START_DAY, julianDay);
+
+                cal.set(startYear, startMonth, startDay, startHour, startMinute);
+                int endDayJulian = Time.getJulianDay(cal.getTimeInMillis(), TimeUnit.MILLISECONDS.toSeconds(tz.getOffset(cal.getTimeInMillis())));
+
+                values.put(CalendarProvider.END, cal.getTimeInMillis());
+                values.put(CalendarProvider.END_DAY, endDayJulian);
+
+                Uri uri = getContext().getContentResolver().insert(CalendarProvider.CONTENT_URI, values);
+
+            }
+
+
+
+        }
+
     }
+
 
     public static class CalendarListAdapter extends ArrayAdapter<CalendarEntry> {
         private final LayoutInflater layoutInflater;
