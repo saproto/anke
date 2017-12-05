@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -94,6 +95,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		month.setLayoutParams(params);
 		month.setTextAppearance(context, android.R.attr.textAppearanceLarge);
 		month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "+cal.get(Calendar.YEAR));
+		month.setTextColor(Color.parseColor("#ffffff"));
 		month.setTextSize(25);
 		
 		base.addView(month);

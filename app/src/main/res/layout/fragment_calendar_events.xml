@@ -1,22 +1,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.proto.AllEventsFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
     <com.tyczj.extendedcalendarview.ExtendedCalendarView
+        android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/calendar">
+        android:layout_above="@+id/event_title"
+        android:textColor="#FFFFFF"></com.tyczj.extendedcalendarview.ExtendedCalendarView>
 
-    </com.tyczj.extendedcalendarview.ExtendedCalendarView>
-
+    <Button
+        android:text="Show Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:id="@+id/button"/>
 </FrameLayout>

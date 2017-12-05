@@ -66,7 +66,7 @@ public class CalendarEntry {
         Log.d("sartDate", String.valueOf(startDate));
         Log.d("start", String.valueOf(start));
 
-        this.endDate = new Date(end);
+        this.endDate = new Date(end*1000);
         Log.d("endDate", String.valueOf(endDate));
 
         this.current = current;
@@ -206,7 +206,7 @@ public class CalendarEntry {
                 int endYear = c.get(Calendar.YEAR);
 
                 ContentValues values = new ContentValues();
-                values.put(CalendarProvider.COLOR, Event.COLOR_RED);
+                values.put(CalendarProvider.COLOR, Event.COLOR_GREEN);
                 values.put(CalendarProvider.DESCRIPTION, calendarEntry.description);
                 values.put(CalendarProvider.LOCATION, calendarEntry.location);
                 values.put(CalendarProvider.EVENT, calendarEntry.title);
@@ -218,7 +218,7 @@ public class CalendarEntry {
                 values.put(CalendarProvider.START, cal.getTimeInMillis());
                 values.put(CalendarProvider.START_DAY, julianDay);
 
-                cal.set(startYear, startMonth, startDay, startHour, startMinute);
+                cal.set(endYear, endMonth, endDay, endHour, endMinute);
                 int endDayJulian = Time.getJulianDay(cal.getTimeInMillis(), TimeUnit.MILLISECONDS.toSeconds(tz.getOffset(cal.getTimeInMillis())));
 
                 values.put(CalendarProvider.END, cal.getTimeInMillis());
@@ -239,6 +239,47 @@ public class CalendarEntry {
         private final LayoutInflater layoutInflater;
 
         public CalendarListAdapter(Context context) {
+            super(context, android.R.layout.simple_list_item_2);
+            layoutInflater = (LayoutInflater)context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public void setData(List<CalendarEntry> data) {
+            clear();
+            if (data != null) {
+                addAll(data);
+            }
+        }
+
+        /**
+         * Populate new data in the list
+         */
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View view;
+
+            if (convertView == null) {
+                view = layoutInflater.inflate(R.layout.calendar_item, parent, false);
+            } else {
+                view = convertView;
+            }
+
+            // TODO: Look into this to make this format better and use the other fields
+            CalendarEntry entry = getItem(position);
+            ((TextView)view.findViewById(R.id.calendar_title)).setText(entry.title);
+            ((TextView)view.findViewById(R.id.calendar_location)).setText(entry.location);
+            ((TextView)view.findViewById(R.id.calendar_start_date)).setText(entry.startDate.toString());
+            ((TextView)view.findViewById(R.id.calendar_end_date)).setText(entry.endDate.toString());
+
+            return view;
+        }
+    }
+
+    public static class CalendarListAdapterSQL extends ArrayAdapter<CalendarEntry> {
+        private final LayoutInflater layoutInflater;
+
+        public CalendarListAdapterSQL(Context context) {
             super(context, android.R.layout.simple_list_item_2);
             layoutInflater = (LayoutInflater)context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
