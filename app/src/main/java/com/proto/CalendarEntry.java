@@ -3,6 +3,7 @@ package com.proto;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.tyczj.extendedcalendarview.CalendarProvider;
+import com.tyczj.extendedcalendarview.Day;
 import com.tyczj.extendedcalendarview.Event;
 
 import org.json.JSONArray;
@@ -227,9 +229,6 @@ public class CalendarEntry {
                 Uri uri = getContext().getContentResolver().insert(CalendarProvider.CONTENT_URI, values);
 
             }
-
-
-
         }
 
     }
@@ -277,14 +276,10 @@ public class CalendarEntry {
     }
 
     public static class CalendarListAdapterSQL extends ArrayAdapter<CalendarEntry> {
-        private final LayoutInflater layoutInflater;
 
-        public CalendarListAdapterSQL(Context context) {
-            super(context, android.R.layout.simple_list_item_2);
-            layoutInflater = (LayoutInflater)context.getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE);
-        }
-
+        Context context;
+        int resource;
+        ArrayList<Event> events = null;
         public void setData(List<CalendarEntry> data) {
             clear();
             if (data != null) {
@@ -292,28 +287,35 @@ public class CalendarEntry {
             }
         }
 
-        /**
-         * Populate new data in the list
-         */
+        public CalendarListAdapterSQL(@NonNull Context context, @LayoutRes int resource, ArrayList<Event> events) {
+            super(context, resource);
+            this.context = context;
+            this.resource = resource;
+            this.events = events;
+        }
+
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View view;
-
-            if (convertView == null) {
-                view = layoutInflater.inflate(R.layout.calendar_item, parent, false);
-            } else {
-                view = convertView;
+            Event event = events.get(position);
+            if(convertView == null){
+                convertView = LayoutInflater.from(context).inflate(R.layout.row_popup_event,parent, false);
             }
+            TextView eventTitle = (TextView)convertView.findViewById(R.id.cal_title);
+            TextView eventStartDate = (TextView)convertView.findViewById(R.id.cal_startdate);
+            TextView eventEndDate = (TextView)convertView.findViewById(R.id.cal_enddate);
+            TextView eventLocation = (TextView)convertView.findViewById(R.id.cal_location);
+            TextView eventDiscription = (TextView)convertView.findViewById(R.id.cal_description);
 
-            // TODO: Look into this to make this format better and use the other fields
-            CalendarEntry entry = getItem(position);
-            ((TextView)view.findViewById(R.id.calendar_title)).setText(entry.title);
-            ((TextView)view.findViewById(R.id.calendar_location)).setText(entry.location);
-            ((TextView)view.findViewById(R.id.calendar_start_date)).setText(entry.startDate.toString());
-            ((TextView)view.findViewById(R.id.calendar_end_date)).setText(entry.endDate.toString());
+            eventTitle.setText(event.getTitle());
+            eventStartDate.setText(event.getStartDate("MEDIUM"));
+            eventEndDate.setText(event.getEndDate("MEDIUM"));
+            eventLocation.setText(event.getLocation());
+            eventDiscription.setText(event.getDescription());
 
-            return view;
+
+
+            return convertView;
         }
     }
 }

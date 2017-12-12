@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tyczj.extendedcalendarview.Day;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements CalendarEventsFragment.OnDaySelectedListener{
 
     @Nullable
     @Override
@@ -61,6 +63,12 @@ public class CalendarFragment extends Fragment {
         adapter.addFragment(new AllEventsFragment(), getString(R.string.all_events));
         adapter.addFragment(new CalendarEventsFragment(), getString(R.string.calendar));
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDaySelected(Day day) {
+       PopUpwindowFragement popUp =  (PopUpwindowFragement) getActivity().getSupportFragmentManager().findFragmentById(R.id.popup_event);
+        popUp.updateDay(day);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
