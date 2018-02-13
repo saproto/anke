@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class CalendarFragment extends Fragment implements CalendarEventsFragment.OnDaySelectedListener{
+public class CalendarFragment extends Fragment{
 
     @Nullable
     @Override
@@ -65,11 +65,10 @@ public class CalendarFragment extends Fragment implements CalendarEventsFragment
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public void onDaySelected(Day day) {
-       PopUpwindowFragement popUp =  (PopUpwindowFragement) getActivity().getSupportFragmentManager().findFragmentById(R.id.popup_event);
-        popUp.updateDay(day);
-    }
+//    @Override
+//    public void onDaySelected(Day day) {
+//
+//    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,12 +21,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.PopupWindow;
+
+import com.tyczj.extendedcalendarview.Day;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CalendarEventsFragment.OnDaySelectedListener {
 
     public static boolean SQLDeleted = false;
 
@@ -133,5 +139,33 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onDaySelected(Day day) {
+        PopUpwindowFragement popUpWindow = (PopUpwindowFragement)
+                getSupportFragmentManager().findFragmentById(R.id.pop_event);
+
+        if (popUpWindow != null) {
+            // If article frag is available, we're in two-pane layout...
+
+            // Call a method in the ArticleFragment to update its content
+            popUpWindow.updateDay(day);
+        } else {
+            // Otherwise, we're in the one-pane layout and must swap frags...
+            PopUpwindowFragement newFragment = new PopUpwindowFragement();
+            // Create fragment and give it an argument for the selected article
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            //Replace whatever is in the fragment_container view with this fragment,
+             //and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+
+  ///           Commit the transaction
+            transaction.commit();
+            newFragment.updateDay(day);
+
+        }
     }
 }
