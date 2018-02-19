@@ -4,6 +4,7 @@ package com.proto;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class CalendarEventsFragment  extends Fragment {
     }
 
     ExtendedCalendarView calendar;
+
     ArrayList<Event> eventList = new ArrayList<Event>();
 
 
@@ -89,26 +91,44 @@ public class CalendarEventsFragment  extends Fragment {
             @Override
             public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day) {
 
-                Log.i(TAG, "arrylist gemaakt");
+                //int dag = ;
+                Intent intent = new Intent(getActivity(), PopUpWindow.class);
+//                intent.putExtra("day",Integer.toString(day.getDay()));
+//                intent.putExtra("month",Integer.toString(day.getMonth()));
+//                intent.putExtra("year",Integer.toString(day.getYear()));
                 int numEvent = day.getNumOfEvenets();
-                Log.i(TAG, "numEvents" + numEvent);
-                for (int i = 0; i < numEvent; i++) {
-                    eventList.add(day.getEvents().get(i));
-                    Log.i(TAG, "in de for loop" + i);
-                }
-                if (numEvent != 0) {
-                    mListener.onDaySelected(day);
+                ArrayList<String> titles = new ArrayList<String>();
+                ArrayList<String> startDate = new ArrayList<String>();
+                ArrayList<String> endDate = new ArrayList<String>();
+                ArrayList<String> location = new ArrayList<String>();
+                ArrayList<String> description = new ArrayList<String>();
+// Toast.makeText(v.getContext(), "Er is geklikt, event op dag: " + day.getDay() + " is " + dagEvent.getDescription() ,Toast.LENGTH_LONG).show();
+                for(int i = 0; i<numEvent; i++){
+
+                    Event dagEvent = day.getEvents().get(i);
+                    //String startdate = dagEvent.getStartDate("short");
+                    titles.add(dagEvent.getTitle());
+                    startDate.add("hoi");
+                    endDate.add("hoi");
+                    location.add(dagEvent.getLocation());
+                    description.add(dagEvent.getDescription());
                 }
 
-                //listEvent.setAdapter(new CalendarEntry.CalendarListAdapterSQL(getActivity().getApplication(),R.layout.row_popup_event,eventList));
 
+                intent.putExtra("numEvent", numEvent);
+                intent.putExtra("title",titles);
+                intent.putExtra("startDate", startDate);
+                intent.putExtra("endDate",endDate);
+                intent.putExtra("location",location);
+                intent.putExtra("description",description);
+                startActivity(intent);
             }
 
             ;
 
         });
-        //  setListAdapter(adapter);
-        // showPopup(savedInstanceState);
+
+
         return v;
     }
 
