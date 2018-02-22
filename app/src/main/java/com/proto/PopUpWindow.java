@@ -40,9 +40,6 @@ public class PopUpWindow extends AppCompatActivity {
             events.add(hoi);
 
         }
-//        String day = getIntent().getStringExtra("day");
-////        String month = getIntent().getStringExtra("month");
-//        String year = getIntent().getStringExtra("year");
 
 
         ListView listView = (ListView) findViewById(R.id.ListView);
