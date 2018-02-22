@@ -1,0 +1,5 @@
+<root>
+    <item name='android.webkit.WebChromeClient'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>

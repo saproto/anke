@@ -1,14 +1,20 @@
 package com.proto;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.Bind;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
@@ -19,38 +25,66 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
 
-        testFunction();
+        //setHasOptionsMenu(true);
+
         return view;
-
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("Menu 1");
+        TabLayout tabLayout;
+        ViewPager viewPager;
+        Toolbar toolbar;
+
+        getActivity().setTitle("Home");
+
+        MainActivity mainActivity = (MainActivity)getActivity();
+        toolbar = (Toolbar)mainActivity.findViewById(R.id.toolbar);
+        mainActivity.setSupportActionBar(toolbar);
+        mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        viewPager = (ViewPager)view.findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) mainActivity.findViewById(R.id.nav_tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void testFunction(){
-        int menuNumber = 5;
-        while (menuNumber>0){
-            if (menuNumber == 1)
-            {
-                menuNumber = 5;
-            }
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter= new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter.addFragment(new NewsFragment(),"news");
+        adapter.addFragment(new InkFragment(),"proto.ink");
+        viewPager.setAdapter(adapter);
+    }
 
-            else if (menuNumber == 2)
-            {
-                menuNumber = menuNumber + 1;
-            }
-            else
-            {
-                menuNumber = menuNumber-1;
-            }
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
 
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
     }
 }

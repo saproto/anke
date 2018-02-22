@@ -1,8 +1,10 @@
 package com.proto;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
@@ -88,9 +89,13 @@ public class MainActivity extends AppCompatActivity
         int menuItemId = item.getItemId();
         Fragment fragment = null;
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.nav_tabs);
+        tabLayout.setVisibility(View.GONE);
+
         //initializing the fragment object which is selected
         switch (menuItemId) {
             case R.id.nav_home:
+                tabLayout.setVisibility(View.VISIBLE);
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_profile:
@@ -100,11 +105,17 @@ public class MainActivity extends AppCompatActivity
                 fragment = new PurchaseHistoryFragment();
                 break;
             case R.id.nav_calendar:
+                tabLayout.setVisibility(View.VISIBLE);
                 fragment = new CalendarFragment();
                 break;
             case R.id.nav_change_password:
                 fragment = new ChangePasswordFragment();
-            break;
+                break;
+            case R.id.nav_login:
+                fragment = new LoginFragment();
+//                Intent oauthIntent = new Intent(this, OAuth2Activity.class);
+//                startActivity(oauthIntent);
+                break;
         }
 
         //replacing the fragment
