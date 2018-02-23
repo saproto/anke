@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.graphics.drawable.Drawable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,14 +37,16 @@ public class ArticleEntry {
     public String description;
     public String link;
     public Date date;
+    public String thumbnail;
     //public Drawable thumbnail;
 
-    public ArticleEntry(int id, String title, String description, String link, long date) {
+    public ArticleEntry(int id, String title, String description, String link, long date, String thumbnail) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.link = link;
         this.date = new Date(date*1000);
+        this.thumbnail = thumbnail;
         //this.thumbnail= thumbnail;
     }
 
@@ -128,7 +129,8 @@ public class ArticleEntry {
                                 event.getString("title"),
                                 event.getString("description"),
                                 event.getString("link"),
-                                event.getLong("date")
+                                event.getLong("date"),
+                                event.getString("thumbnail")
                         );
                         articleEntries.add(articleEntry);
                     }
