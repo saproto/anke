@@ -97,7 +97,8 @@ public class Event {
 	 * @return start date
 	 */
 	public String getStartDate(){
-		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,Locale.getDefault());
+		//DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,Locale.getDefault());
+		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
 		String date = df.format(start);
 		return date;
 	}
@@ -112,7 +113,7 @@ public class Event {
 	 * @return end date
 	 */
 	public String getEndDate(){
-		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT,Locale.getDefault());
+		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
 		String date = df.format(end);
 		
 		return date;
