@@ -182,6 +182,7 @@ public class CalendarEntry {
 
             // Sort the list
             Collections.sort(calendarEntries, DATE_COMPARATOR);
+
             FillSQLCalendar(calendarEntries);
             return calendarEntries;
         }
@@ -275,47 +276,5 @@ public class CalendarEntry {
         }
     }
 
-//    public static class CalendarListAdapterSQL extends ArrayAdapter<CalendarEntry> {
-//
-//        Context context;
-//        int resource;
-//        ArrayList<DayPopUpListFragment> events = null;
-//        public void setData(List<CalendarEntry> data) {
-//            clear();
-//            if (data != null) {
-//                addAll(data);
-//            }
-//        }
-//
-//        public CalendarListAdapterSQL(@NonNull Context context, @LayoutRes int resource, ArrayList<DayPopUpListFragment> events) {
-//            super(context, resource);
-//            this.context = context;
-//            this.resource = resource;
-//            this.events = events;
-//        }
-//
-//        @NonNull
-//        @Override
-//        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//            DayPopUpListFragment event = events.get(position);
-//            if(convertView == null){
-//                convertView = LayoutInflater.from(context).inflate(resource,parent, false);
-//            }
-//            TextView eventTitle = (TextView)convertView.findViewById(R.id.cal_title);
-//            TextView eventStartDate = (TextView)convertView.findViewById(R.id.cal_startdate);
-//            TextView eventEndDate = (TextView)convertView.findViewById(R.id.cal_enddate);
-//            TextView eventLocation = (TextView)convertView.findViewById(R.id.cal_location);
-//            TextView eventDiscription = (TextView)convertView.findViewById(R.id.cal_description);
-//
-//            eventTitle.setText(event.title);
-//            eventStartDate.setText(event.startDate);
-//            eventEndDate.setText(event.endDate);
-//            eventLocation.setText(event.location);
-//            eventDiscription.setText(event.description);
-//
-//
-//
-//            return convertView;
-//        }
-//    }
+
 }

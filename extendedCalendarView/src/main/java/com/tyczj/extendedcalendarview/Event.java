@@ -97,11 +97,15 @@ public class Event {
 	 * @return start date
 	 */
 	public String getStartDate(){
-		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT,Locale.getDefault());
+		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,Locale.getDefault());
 		String date = df.format(start);
 		return date;
 	}
-	
+	public String getDate(){
+		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG,Locale.getDefault());
+		String date = df.format(start);
+		return date;
+	}
 	/**
 	 * Get the end date of the event
 	 * 

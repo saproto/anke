@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackgroundPopUp"
+    >
+    <!-- android:background="@color/cardview_dark_background"-->
+    <!--android:textColor="@color/textColor"> -->
 
-    <TextView
-        android:id="@+id/txvTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Subject" />
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+
+        >
+
+        <TextView
+            android:id="@+id/txvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Subject"
+            android:textSize="17dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tijd"
+            android:layout_marginRight="10dp"/>
     <TextView
         android:id="@+id/txvStartDate"
         android:layout_width="wrap_content"
@@ -17,14 +51,28 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Subject" />
+        <TextView
+            android:id="@+id/txvEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Subject" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/txvEndDate"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Subject" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plaats"
+            android:layout_marginRight="10dp" />
     <TextView
         android:id="@+id/txvLocation"
         android:layout_width="wrap_content"
@@ -32,6 +80,19 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Subject" />
+
+        </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        >
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/description"/>
     <TextView
         android:id="@+id/txvDescription"
         android:layout_width="wrap_content"
@@ -39,5 +100,5 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Subject" />
-
+</LinearLayout>
 </LinearLayout>

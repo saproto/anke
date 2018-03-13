@@ -19,6 +19,8 @@ public class PopUpWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_window);
+        setTitle(getIntent().getStringExtra("day"));
+
         int numEvent = getIntent().getIntExtra("numEvent",0);
 
         ArrayList<String> titleArray = getIntent().getStringArrayListExtra("title");

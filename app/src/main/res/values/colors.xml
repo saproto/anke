@@ -6,4 +6,6 @@
     <color name="colorAccent">#00CC00</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColor">#FFFFFF</color>
+    <color name="actionbar_background">#262626</color>
+    <color name="colorBackgroundPopUp">#424242</color>
 </resources>
