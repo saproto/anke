@@ -4,26 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.proto.InkFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swiperefresh"
+    <ListView
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <TextView
-        android:id="@+id/emptyElement"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/no_entries_found"
-        android:textAlignment="center"
-        android:textColor="#525252"
-        android:textSize="19.0sp"
-        android:visibility="gone" />
+        android:layout_height="match_parent" />
 </FrameLayout>
 

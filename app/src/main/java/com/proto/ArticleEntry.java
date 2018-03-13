@@ -1,14 +1,23 @@
 package com.proto;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,9 +27,12 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +44,7 @@ import java.util.List;
  * This class holds the data for a calendar entry.
  */
 public class ArticleEntry {
-    public int id;
+    //public int id;
     public String title;
     public String description;
     public String link;
@@ -40,8 +52,7 @@ public class ArticleEntry {
     public String thumbnail;
     //public Drawable thumbnail;
 
-    public ArticleEntry(int id, String title, String description, String link, long date, String thumbnail) {
-        this.id = id;
+    public ArticleEntry(String title, String description, String link, long date, String thumbnail) {
         this.title = title;
         this.description = description;
         this.link = link;
@@ -60,9 +71,9 @@ public class ArticleEntry {
         @Override
         public int compare(ArticleEntry o1, ArticleEntry o2) {
             if (o1.date.before(o2.date)) {
-                return -1;
-            } else if (o1.date.after(o2.date)) {
                 return 1;
+            } else if (o1.date.after(o2.date)) {
+                return -1;
             } else {
                 return 0;
             }
@@ -80,6 +91,7 @@ public class ArticleEntry {
         public ArticleListLoader(Context context, String urlToLoad) {
             super(context);
             this.urlToLoad = urlToLoad;
+            Log.d("in Article list loader","in aritcle list loader ");
         }
 
         /**
@@ -125,7 +137,7 @@ public class ArticleEntry {
                     for (int eventIndex = 0; eventIndex < events.length(); eventIndex++) {
                         JSONObject event = events.getJSONObject(eventIndex);
                         ArticleEntry articleEntry = new ArticleEntry(
-                                event.getInt("id"),
+                              //  event.getInt("id"),
                                 event.getString("title"),
                                 event.getString("description"),
                                 event.getString("link"),
@@ -133,6 +145,7 @@ public class ArticleEntry {
                                 event.getString("thumbnail")
                         );
                         articleEntries.add(articleEntry);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -171,6 +184,7 @@ public class ArticleEntry {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view;
+            //Bitmap bitmapThumbnail;
 
             if (convertView == null) {
                 view = layoutInflater.inflate(R.layout.article_item, parent, false);
@@ -178,13 +192,42 @@ public class ArticleEntry {
                 view = convertView;
             }
 
-            // TODO: Look into this to make this format better and use the other fields
             ArticleEntry entry = getItem(position);
+
+            Bitmap bitmapThumbnail= getbmpfromURL(entry.thumbnail);
+            Drawable imageThumbnail = new BitmapDrawable(getContext().getResources(), bitmapThumbnail);
+
+            // TODO: Look into this to make this format better and use the other fields
+
             ((TextView)view.findViewById(R.id.article_title)).setText(entry.title);
             ((TextView)view.findViewById(R.id.article_description)).setText(entry.description);
             ((TextView)view.findViewById(R.id.article_date)).setText(entry.date.toString());
 
+            ((ImageView)view.findViewById(R.id.article_thumbnail)).setImageBitmap(bitmapThumbnail);
+
             return view;
+        }
+
+        public Bitmap getbmpfromURL(String surl){
+            try {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                URL url = new URL(surl);
+                HttpURLConnection urlcon = (HttpURLConnection) url.openConnection();
+                urlcon.setDoInput(true);
+                urlcon.setDoOutput(true);
+                urlcon.connect();
+
+                int response = urlcon.getResponseCode();
+                InputStream in = urlcon.getInputStream();
+                Bitmap mIcon = BitmapFactory.decodeStream(in);
+                return  mIcon;
+            } catch (Exception e) {
+                //Log.e("Error", e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+
         }
     }
 }

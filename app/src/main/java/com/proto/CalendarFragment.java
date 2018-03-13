@@ -22,12 +22,12 @@ public class CalendarFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_calendar, container, false);
-        ButterKnife.bind(this, root);
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        ButterKnife.bind(this, view);
 
         setHasOptionsMenu(true);
 
-        return root;
+        return view;
     }
 
     @Override

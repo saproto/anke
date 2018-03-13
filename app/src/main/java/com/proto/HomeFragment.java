@@ -26,7 +26,6 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         //setHasOptionsMenu(true);
-
         return view;
     }
 
