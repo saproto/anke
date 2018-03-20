@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
-public class PopUpWindow extends AppCompatActivity {
+public class PopUpWindowActivity extends AppCompatActivity {
 
 
     @Override

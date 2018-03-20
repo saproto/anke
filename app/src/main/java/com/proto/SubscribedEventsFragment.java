@@ -21,20 +21,20 @@ public class SubscribedEventsFragment extends Fragment {
      * @return A new instance of fragment SubscribedEventsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SubscribedEventsFragment newInstance(String param1, String param2) {
-        SubscribedEventsFragment fragment = new SubscribedEventsFragment();
-        return fragment;
-    }
+//    public static SubscribedEventsFragment newInstance(String param1, String param2) {
+//        SubscribedEventsFragment fragment = new SubscribedEventsFragment();
+//        return fragment;
+//    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_subscribed_events, container, false);
-    }
+   // @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        return inflater.inflate(R.layout.fragment_subscribed_events, container, false);
+//    }
 }

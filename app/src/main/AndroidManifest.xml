@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PopUpWindow"
+        <activity android:name=".PopUpWindowActivity"
         android:theme="@style/Theme.AppCompat.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

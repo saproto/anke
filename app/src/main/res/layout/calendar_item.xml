@@ -14,24 +14,21 @@
         android:ellipsize="marquee"
         android:maxLines="1"
         android:textColor="@color/textColor"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/calendar_location"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:ellipsize="marquee"
-        android:maxLines="1"
-        android:textColor="@color/textColor"
+        android:textSize="17dp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="26dip"
-        android:layout_below="@+id/calendar_title"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="6dip">
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/tijd"/>
 
         <TextView
             android:id="@+id/calendar_start_date"
@@ -50,5 +47,30 @@
             android:ellipsize="marquee"
             android:maxLines="1"
             android:textColor="@color/textColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dip"
+        android:layout_below="@+id/calendar_title"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp">
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/plaats"/>
+        <TextView
+            android:id="@+id/calendar_location"
+            android:layout_width="fill_parent"
+            android:layout_height="26dip"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:textColor="@color/textColor" />
+            <!--android:textStyle="bold" />-->
+
     </LinearLayout>
 </LinearLayout>

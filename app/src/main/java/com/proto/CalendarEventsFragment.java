@@ -14,7 +14,7 @@ import com.tyczj.extendedcalendarview.Day;
 import com.tyczj.extendedcalendarview.Event;
 import com.tyczj.extendedcalendarview.ExtendedCalendarView;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 
 
 public class CalendarEventsFragment  extends Fragment {
@@ -24,6 +24,8 @@ public class CalendarEventsFragment  extends Fragment {
     }
 
     ExtendedCalendarView calendar;
+    CalendarEntry.SQLDatabase sqlDatabase;
+
 
     ArrayList<Event> eventList = new ArrayList<Event>();
 
@@ -31,6 +33,8 @@ public class CalendarEventsFragment  extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sqlDatabase = new CalendarEntry.SQLDatabase(getActivity()); //, calendarEntries);
+        sqlDatabase.FillSQLCalendar(CalendarEntry.CalendarListLoader.calendarEntries);
 
 
     }
@@ -41,13 +45,14 @@ public class CalendarEventsFragment  extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_calendar_events, container, false);
         super.onViewCreated(v, savedInstanceState);
+
         //listContainer = getListView();
         calendar = (ExtendedCalendarView) v.findViewById(R.id.calendar);
         calendar.setOnDayClickListener(new ExtendedCalendarView.OnDayClickListener() {
             @Override
             public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day) {
 
-                Intent intent = new Intent(getActivity(), PopUpWindow.class);
+                Intent intent = new Intent(getActivity(), PopUpWindowActivity.class);
                 int numEvent = day.getNumOfEvenets();
                 ArrayList<String> titles = new ArrayList<String>();
                 ArrayList<String> startDate = new ArrayList<String>();

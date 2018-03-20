@@ -21,7 +21,6 @@ public class RecentEventsFragment
     CalendarEntry.CalendarListAdapter adapter;
     // The search view for filtering
     View listContainer;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +29,15 @@ public class RecentEventsFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        MainActivity.SQLDeleted = false;
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recent_events, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
+        super.onViewCreated(view, savedInstanceState);
         // URL: "https://www.proto.utwente.nl/api/events/upcoming"
 
         listContainer = getListView();
@@ -69,9 +68,10 @@ public class RecentEventsFragment
      * @param args
      * @return a new loader for calendar entries.
      */
-    @Override public Loader<List<CalendarEntry>> onCreateLoader(int id, Bundle args) {
-        return new CalendarEntry.CalendarListLoader(getActivity(), "https://www.proto.utwente.nl/api/events/upcoming");
-    }
+  @Override public Loader<List<CalendarEntry>> onCreateLoader(int id, Bundle args) {
+
+      return new CalendarEntry.CalendarListLoader(getActivity(), "https://www.proto.utwente.nl/api/events/upcoming");
+  }
 
     @Override public void onLoadFinished(Loader<List<CalendarEntry>> loader,
                                          List<CalendarEntry> entries) {

@@ -60,12 +60,13 @@ public class CalendarFragment extends Fragment{
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new RecentEventsFragment(), getString(R.string.recent_events));
         adapter.addFragment(new SubscribedEventsFragment(), getString(R.string.subscribed_events));
-        adapter.addFragment(new AllEventsFragment(), getString(R.string.all_events));
         adapter.addFragment(new CalendarEventsFragment(), getString(R.string.calendar));
+        adapter.addFragment(new AllEventsFragment(), getString(R.string.all_events));
         viewPager.setAdapter(adapter);
     }
 
-//    @Override
+//    @Overr
+// ide
 //    public void onDaySelected(Day day) {
 //
 //    }
