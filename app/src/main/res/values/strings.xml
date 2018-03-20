@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Proto</string>
-
+    <string name="app_name">S.A. Proto</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="login_label">login</string>
+    <string name="signup_title">signup_title</string>
+    <string name="label">S.A. Proto</string>
     <string name="action_settings">Settings</string>
 </resources>
