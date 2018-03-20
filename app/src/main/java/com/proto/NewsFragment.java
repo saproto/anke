@@ -28,33 +28,6 @@ public class NewsFragment extends ListFragment
         // Required empty public constructor
     }
 
-    public interface OnDaySelectedListener {
-        void onDaySelected(Day day);
-    }
-
-    private OnDaySelectedListener sDummyCallbacks = new OnDaySelectedListener() {
-        @Override
-        public void onDaySelected(Day day) {
-        }
-    };
-
-    private OnDaySelectedListener mListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-
-//          if (context instanceof OnDaySelectedListener) {
-            mListener = (OnDaySelectedListener) context;
-            //    }
-        } catch (ClassCastException e) {
-
-            throw new ClassCastException(context.toString() + " must implement OnDaySelectedListener");
-
-        }
-//
-    }
 
   /* public static InkFragment newInstance(String param1, String param2){
        InkFragment fragment = new InkFragment ();

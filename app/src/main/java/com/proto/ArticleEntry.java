@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -186,6 +188,8 @@ public class ArticleEntry {
             View view;
             //Bitmap bitmapThumbnail;
 
+            ImageButton imageButton;
+
             if (convertView == null) {
                 view = layoutInflater.inflate(R.layout.article_item, parent, false);
             } else {
@@ -200,11 +204,12 @@ public class ArticleEntry {
             // TODO: Look into this to make this format better and use the other fields
 
             ((TextView)view.findViewById(R.id.article_title)).setText(entry.title);
-            ((TextView)view.findViewById(R.id.article_description)).setText(entry.description);
-            ((TextView)view.findViewById(R.id.article_date)).setText(entry.date.toString());
+          //((TextView)view.findViewById(R.id.article_description)).setText(entry.description);
+          //((TextView)view.findViewById(R.id.article_date)).setText(entry.date.toString());
 
+            //imageButton = (ImageButton) findViewById(R.id.article_thumbnail);
             ((ImageView)view.findViewById(R.id.article_thumbnail)).setImageBitmap(bitmapThumbnail);
-
+            //Toast.makeText(R.id.article_thumbnail, entry.title, Toast.LENGTH_SHORT).show();
             return view;
         }
 
