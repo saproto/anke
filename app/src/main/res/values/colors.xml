@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#262626</color>
+    <color name="windowBackground">#262626</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#00CC00</color>
+    <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColor">#FFFFFF</color>
+    <color name="actionbar_background">#262626</color>
+    <color name="colorBackgroundPopUp">#424242</color>
 </resources>

@@ -1,8 +1,26 @@
 <resources>
-    <string name="app_name">Proto</string>
+    <string name="app_name">S.A. Proto</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="login_label">login</string>
+    <string name="signup_title">signup_title</string>
+    <string name="label">S.A. Proto</string>
     <string name="action_settings">Settings</string>
+    <string name="search_hint">Awesome Event</string>
+    <string name="calendar">Calendar</string>
+    <string name="recent_events">Upcoming Events</string>
+    <string name="all_events">All Events</string>
+    <string name="subscribed_events">Subscribed Events</string>
+    <string name="no_entries_found">No Evens Found</string>
+    <string name="menu_login">Log in</string>
+    <string name="menu_change_password">Change Password</string>
+    <string name="menu_calendar">Calendar</string>
+    <string name="menu_purchase_history">Purchase History</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_home">Home</string>
+    <string name="no_events_found">No events found.</string>
+    <string name="login_button">Login</string>
+
 </resources>

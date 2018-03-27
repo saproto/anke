@@ -1,10 +1,19 @@
 package com.proto;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,13 +24,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.PopupWindow;
+
+import com.proto.calendar.CalendarEntry;
+import com.proto.calendar.CalendarFragment;
+import com.proto.home.HomeFragment;
+import com.proto.user.ChangePasswordFragment;
+import com.proto.oauth.LoginActivity;
+import com.tyczj.extendedcalendarview.Day;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,LoaderManager.LoaderCallbacks<List<CalendarEntry>> { //CalendarEventsFragment.OnDaySelectedListener {
 
+    public static boolean SQLDeleted = false;
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
 
@@ -37,7 +57,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -81,6 +101,22 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public android.support.v4.content.Loader<List<CalendarEntry>> onCreateLoader(int id, Bundle args) {
+        return new CalendarEntry.CalendarListLoader(MainActivity.this, "https://www.proto.utwente.nl/api/events/upcoming");
+    }
+
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<List<CalendarEntry>> loader, List<CalendarEntry> data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<List<CalendarEntry>> loader) {
+
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -88,9 +124,13 @@ public class MainActivity extends AppCompatActivity
         int menuItemId = item.getItemId();
         Fragment fragment = null;
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.nav_tabs);
+        tabLayout.setVisibility(View.GONE);
+
         //initializing the fragment object which is selected
         switch (menuItemId) {
             case R.id.nav_home:
+                tabLayout.setVisibility(View.VISIBLE);
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_profile:
@@ -100,11 +140,19 @@ public class MainActivity extends AppCompatActivity
                 fragment = new PurchaseHistoryFragment();
                 break;
             case R.id.nav_calendar:
+                tabLayout.setVisibility(View.VISIBLE);
                 fragment = new CalendarFragment();
                 break;
             case R.id.nav_change_password:
                 fragment = new ChangePasswordFragment();
-            break;
+                break;
+            case R.id.nav_login:
+                //fragment = new LoginFragment();
+                Intent loginIntent = new Intent(this, LoginActivity.class);
+                startActivity(loginIntent);
+//                Intent oauthIntent = new Intent(this, OAuth2Activity.class);
+//                startActivity(oauthIntent);
+                break;
         }
 
         //replacing the fragment

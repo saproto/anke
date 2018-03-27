@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/oauthButton"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            tools:layout_editor_absoluteY="81dp"
+            tools:layout_editor_absoluteX="8dp" />
+
+    <TextView
+        android:id="@+id/oauthTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dit is het oauth scherm!" />
+
+</LinearLayout>
