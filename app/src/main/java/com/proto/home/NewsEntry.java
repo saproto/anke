@@ -1,17 +1,23 @@
 package com.proto.home;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.proto.MainActivity;
 import com.proto.R;
+import com.proto.calendar.PopUpWindowActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +53,7 @@ public class NewsEntry {
         this.title = title;
         this.featured_image_url = featured_image_url;
         this.content = content;
-        this.published_at = new Date(published_at*1000);
+        this.published_at = new Date(published_at * 1000);
     }
 
     /**
@@ -57,6 +63,7 @@ public class NewsEntry {
      */
     public static final Comparator<NewsEntry> DATE_COMPARATOR = new Comparator<NewsEntry>() {
         private final Collator collator = Collator.getInstance();
+
         @Override
         public int compare(NewsEntry o1, NewsEntry o2) {
             if (o1.published_at.before(o2.published_at)) {
@@ -80,13 +87,14 @@ public class NewsEntry {
         public NewsListLoader(Context context, String urlToLoad) {
             super(context);
             this.urlToLoad = urlToLoad;
-            Log.d("in News list loader","in News list loader ");
+            Log.d("in News list loader", "in News list loader ");
         }
 
         /**
          * This is where the bulk of the work is done. This function is called in a
          * background thread and should generate a new list of data to be published
          * by the loader.
+         *
          * @return The list of calendar entries.
          */
         @Override
@@ -100,7 +108,7 @@ public class NewsEntry {
                 InputStream input = null;
 
                 try {
-                    url_connection = (HttpURLConnection)url.openConnection();
+                    url_connection = (HttpURLConnection) url.openConnection();
                     input = new BufferedInputStream(url_connection.getInputStream());
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
                     String inputLine = "";
@@ -124,13 +132,13 @@ public class NewsEntry {
                     JSONArray events = new JSONArray(response);
                     newsEntries = new ArrayList<NewsEntry>(events.length());
                     for (int eventIndex = 0; eventIndex < events.length(); eventIndex++) {
-                        JSONObject event = events.getJSONObject(eventIndex);
+                        JSONObject newsEvent = events.getJSONObject(eventIndex);
                         NewsEntry newsEntry = new NewsEntry(
-                                event.getInt("id"),
-                                event.getString("title"),
-                                event.getString("featured_image_url"),
-                                event.getString("content"),
-                                event.getLong("published_at")
+                                newsEvent.getInt("id"),
+                                newsEvent.getString("title"),
+                                newsEvent.getString("featured_image_url"),
+                                newsEvent.getString("content"),
+                                newsEvent.getLong("published_at")
                         );
                         newsEntries.add(newsEntry);
                     }
@@ -153,7 +161,7 @@ public class NewsEntry {
 
         public NewsListAdapter(Context context) {
             super(context, android.R.layout.simple_list_item_2);
-            layoutInflater = (LayoutInflater)context.getSystemService(
+            layoutInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -180,12 +188,39 @@ public class NewsEntry {
 
             // TODO: Look into this to make this format better and use the other fields
             NewsEntry entry = getItem(position);
-            ((TextView)view.findViewById(R.id.news_title)).setText(entry.title);
-            ((TextView)view.findViewById(R.id.news_content)).setText(entry.content);
-            ((TextView)view.findViewById(R.id.news_published_at)).setText(entry.published_at.toString());
+            ((TextView) view.findViewById(R.id.news_title)).setText(entry.title);
+            ((TextView) view.findViewById(R.id.news_content)).setText(entry.content);
+            ((TextView) view.findViewById(R.id.news_published_at)).setText(entry.published_at.toString());
+            Button button = (Button) view.findViewById(R.id.news_buttonTest);
 
+            button.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                     popUpWindow(v);
+                    }
+
+            });
             return view;
         }
+
+        public void popUpWindow(View v){
+            final CharSequence[] items = { "Mango", "Banana", "Apple" };
+            Context context = getContext();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Select Fruit");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Auto-generated method stub
+                    dialog.cancel();
+
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+                 }
     }
 }
 
