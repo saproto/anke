@@ -1,9 +1,14 @@
 package com.proto.oauth;
 
+import com.proto.home.Article;
+import com.proto.home.ArticleEntry;
+import com.proto.home.NewsEntry;
+import com.proto.service.MyResponse;
 import com.proto.user.User;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -25,4 +30,14 @@ public interface SAProtoClient {
     /*@GET("api/user/info")
     Call<ResponseBody> getUser(@Header("Authorization") String token);
 */
+
+    @GET("api/user/info")
+    Call<MyResponse> getUserPlane(@Header("Authorization") String token);
+
+    @GET("api/user/info")
+    void getUserPlane2(@Header("Authorization") String token, Callback<MyResponse> callback);
+
+    @GET("api/protoink")
+    Call<ArticleEntry[]> getProtoInkArticles();
+
 }

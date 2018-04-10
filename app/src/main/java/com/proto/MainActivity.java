@@ -1,11 +1,20 @@
 package com.proto;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +24,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.proto.calendar.CalendarEntry;
 import com.proto.calendar.CalendarFragment;
 import com.proto.home.HomeFragment;
 import com.proto.user.ChangePasswordFragment;
 import com.proto.oauth.LoginActivity;
+import com.proto.user.User;
+import com.tyczj.extendedcalendarview.Day;
 
 import java.util.List;
 
@@ -40,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.nav_view)
     protected NavigationView navigationView;
 
+    protected User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +70,8 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        user = (User) getIntent().getSerializableExtra("USER");
+        Toast.makeText(this, "The user: "+ user, Toast.LENGTH_SHORT).show();
     }
 
 

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.google.gson.annotations.SerializedName;
 import com.proto.R;
 
 import org.json.JSONArray;
@@ -43,18 +44,25 @@ import java.util.List;
  */
 public class ArticleEntry {
     //public int id;
+    @SerializedName("title")
     public String title;
+    @SerializedName("description")
     public String description;
+    @SerializedName("link")
     public String link;
-    public Date date;
+    //@SerializedName("date")
+    public Date dates;
+    @SerializedName("thumbnail")
     public String thumbnail;
     //public Drawable thumbnail;
+
+
 
     public ArticleEntry(String title, String description, String link, long date, String thumbnail) {
         this.title = title;
         this.description = description;
         this.link = link;
-        this.date = new Date(date*1000);
+        this.dates = new Date(date*1000);
         this.thumbnail = thumbnail;
         //this.thumbnail= thumbnail;
     }
@@ -68,9 +76,9 @@ public class ArticleEntry {
         private final Collator collator = Collator.getInstance();
         @Override
         public int compare(ArticleEntry o1, ArticleEntry o2) {
-            if (o1.date.before(o2.date)) {
+            if (o1.dates.before(o2.dates)) {
                 return 1;
-            } else if (o1.date.after(o2.date)) {
+            } else if (o1.dates.after(o2.dates)) {
                 return -1;
             } else {
                 return 0;

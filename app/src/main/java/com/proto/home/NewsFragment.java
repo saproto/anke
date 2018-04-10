@@ -1,6 +1,5 @@
 package com.proto.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -46,7 +45,8 @@ public class NewsFragment extends ListFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-             return inflater.inflate(R.layout.fragment_news, container, false);
+
+        return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
     @Override
@@ -76,10 +76,6 @@ public class NewsFragment extends ListFragment
         // Prepare the loader
         getLoaderManager().initLoader(0, null, this).forceLoad();
     }
-
-
-
-
 
     /*@Override public Loader<List<ArticleEntry>> onCreateLoader(int id, Bundle args) {
         Uri.Builder uri = new Uri.Builder();
@@ -139,6 +135,4 @@ public class NewsFragment extends ListFragment
     @Override public void setListShownNoAnimation(boolean shown) {
         setListShown(shown, false);
     }
-
-
 }
