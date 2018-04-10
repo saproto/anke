@@ -44,7 +44,7 @@ public class CalendarFragment extends Fragment{
         ViewPager viewPager;
 
         //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("Calendar");
+        getActivity().setTitle(" ");
 
         MainActivity mainActivity = (MainActivity)getActivity();
         toolbar = (Toolbar)mainActivity.findViewById(R.id.toolbar);
