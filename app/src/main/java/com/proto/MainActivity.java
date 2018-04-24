@@ -30,15 +30,18 @@ import android.widget.Toast;
 import com.proto.calendar.CalendarEntry;
 import com.proto.calendar.CalendarFragment;
 import com.proto.home.HomeFragment;
-import com.proto.user.ChangePasswordFragment;
+import com.proto.user.*;
 import com.proto.oauth.LoginActivity;
-import com.proto.user.User;
+import com.proto.user.ChangePasswordFragment;
+import com.proto.user.ProfileFragment;
 import com.tyczj.extendedcalendarview.Day;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static android.R.id.toggle;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,LoaderManager.LoaderCallbacks<List<CalendarEntry>> { //CalendarEventsFragment.OnDaySelectedListener {
@@ -65,13 +68,17 @@ public class MainActivity extends AppCompatActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
 
         navigationView.setNavigationItemSelectedListener(this);
 
         user = (User) getIntent().getSerializableExtra("USER");
         Toast.makeText(this, "The user: "+ user, Toast.LENGTH_SHORT).show();
+
+
     }
 
 
@@ -108,6 +115,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
+
+
     @Override
     public android.support.v4.content.Loader<List<CalendarEntry>> onCreateLoader(int id, Bundle args) {
         return new CalendarEntry.CalendarListLoader(MainActivity.this, "https://www.proto.utwente.nl/api/events/upcoming");
@@ -140,7 +151,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_profile:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("USER", user);
                 fragment = new ProfileFragment();
+                fragment.setArguments(bundle);
                 break;
             case R.id.nav_history:
                 fragment = new PurchaseHistoryFragment();
