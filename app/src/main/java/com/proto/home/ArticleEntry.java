@@ -50,19 +50,19 @@ public class ArticleEntry {
     public String description;
     @SerializedName("link")
     public String link;
-    //@SerializedName("date")
-    public Date dates;
+    @SerializedName("date")
+    public Long date;
     @SerializedName("thumbnail")
     public String thumbnail;
     //public Drawable thumbnail;
-
+    public Date dates;
 
 
     public ArticleEntry(String title, String description, String link, long date, String thumbnail) {
         this.title = title;
         this.description = description;
         this.link = link;
-        this.dates = new Date(date*1000);
+       // this.date = new Date(dates*1000);
         this.thumbnail = thumbnail;
         //this.thumbnail= thumbnail;
     }
@@ -240,4 +240,3 @@ public class ArticleEntry {
         }
     }
 }
-

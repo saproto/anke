@@ -11,25 +11,34 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.proto.MainActivity;
 import com.proto.R;
+import com.proto.oauth.LoginActivity;
+import com.proto.oauth.SAProtoClient;
+import com.proto.service.RetroFitServiceGenerator;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
+    private SAProtoClient service;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        service = RetroFitServiceGenerator.createService(SAProtoClient.class);
 
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -40,6 +49,7 @@ public class HomeFragment extends Fragment {
         TabLayout tabLayout;
         ViewPager viewPager;
         Toolbar toolbar;
+
 
         getActivity().setTitle("Home");
 
@@ -56,17 +66,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter= new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapterHome adapter= new ViewPagerAdapterHome(getActivity().getSupportFragmentManager());
         adapter.addFragment(new NewsFragment(),"news");
         adapter.addFragment(new InkFragment(),"proto.ink");
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+
+    class ViewPagerAdapterHome extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        public ViewPagerAdapterHome(FragmentManager manager) {
             super(manager);
         }
 

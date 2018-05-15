@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,17 @@ import android.widget.ProgressBar;
 
 import com.proto.R;
 import com.proto.home.ArticleEntry;
+import com.proto.oauth.SAProtoClient;
+import com.proto.service.RetroFitServiceGenerator;
 
+import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static java.util.Arrays.asList;
 
 public class InkFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<List<ArticleEntry>>{
@@ -24,6 +34,8 @@ public class InkFragment extends ListFragment
     ArticleEntry.ArticleListAdapter adapter;
 
     View listContainer;
+
+    SAProtoClient service;
 
     //SwipeRefreshLayout refreshLayout;
 
@@ -41,6 +53,9 @@ public class InkFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState){
        super.onCreate(savedInstanceState);
        //setContentView(R.layout.fragment_ink);
+
+       service = RetroFitServiceGenerator.createService(SAProtoClient.class);
+
 
    }
 
@@ -75,7 +90,8 @@ public class InkFragment extends ListFragment
         //setListShown(false);
 
         // Prepare the loader
-        getLoaderManager().initLoader(0, null, this).forceLoad();
+        //getLoaderManager().initLoader(0, null, this).forceLoad();
+        getArticles();
     }
 
     /*@Override public Loader<List<ArticleEntry>> onCreateLoader(int id, Bundle args) {
@@ -94,6 +110,8 @@ public class InkFragment extends ListFragment
     @Override public Loader<List<ArticleEntry>> onCreateLoader(int id, Bundle args) {
         return new ArticleEntry.ArticleListLoader(getActivity(), "https://www.proto.utwente.nl/api/protoink");
     }
+
+
 
     @Override public void onLoadFinished(Loader<List<ArticleEntry>> loader,
                                          List<ArticleEntry> entries) {
@@ -136,4 +154,34 @@ public class InkFragment extends ListFragment
     @Override public void setListShownNoAnimation(boolean shown) {
         setListShown(shown, false);
     }
+
+    public void getArticles(){
+
+        Call<ArticleEntry[]> articles = service.getProtoInkArticles();
+
+        articles.enqueue(new Callback<ArticleEntry[]>() {
+            @Override
+            public void onResponse(Call<ArticleEntry[]> call, Response<ArticleEntry[]> response) {
+                ArticleEntry[] res = response.body();
+
+                List<ArticleEntry> entries = Arrays.asList(response.body());
+                adapter.setData(entries);
+
+                    if (isResumed()) {
+                        setListShown(true);
+                    } else {
+                        setListShownNoAnimation(true);
+                    }
+                //Toast.makeText(HomeFragment.this, "", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ArticleEntry[]> call, Throwable t) {
+                Log.d("InkFragment","Getting the articles was a faillure");
+            }
+        });
+    }
+
 }
+
+
