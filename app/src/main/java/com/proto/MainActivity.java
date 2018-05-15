@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         user = (User) getIntent().getSerializableExtra("USER");
-        Toast.makeText(this, "The user: "+ user, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "The user: "+ user, Toast.LENGTH_SHORT).show();
 
 
     }

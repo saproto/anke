@@ -1,37 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:orientation="vertical" android:layout_width="wrap_content"
-
-    android:layout_height="match_parent">    <TextView
-
-    android:id="@+id/oauthTextView"
+    android:layout_height="match_parent"
 
     android:layout_width="match_parent"
 
-    android:layout_height="wrap_content"
+    android:background="@color/windowBackground">
 
-    android:text="Dit is het oauth scherm!" />    <Button
+    <ImageView
 
-    android:id="@+id/oauthButton"
+        android:id="@+id/imageView7"
 
-    android:layout_width="131dp"
+        android:layout_width="wrap_content"
 
-    android:layout_height="wrap_content"
+        android:layout_height="wrap_content"
 
-    android:text="Login"
+        android:adjustViewBounds="true"
 
-    tools:layout_editor_absoluteX="8dp"
+        app:srcCompat="@drawable/protologo"
 
-    tools:layout_editor_absoluteY="81dp" />    <Button
+        android:layout_marginTop="62dp"
 
-    android:id="@+id/protoinkButton"
+        android:layout_alignParentTop="true" />
 
-    android:layout_width="298dp"
+    <Button
 
-    android:layout_height="wrap_content"
+        android:id="@+id/oauthButton"
 
-    android:text="Proto.INK" /></LinearLayout>
+        android:layout_width="131dp"
+
+        android:layout_height="wrap_content"
+
+        android:text="Login"
+
+        tools:layout_editor_absoluteX="8dp"
+
+        tools:layout_editor_absoluteY="81dp"
+
+        android:layout_marginBottom="21dp"
+
+        android:layout_above="@+id/protoinkButton"
+
+        android:layout_centerHorizontal="true" />
+
+    <Button
+
+        android:id="@+id/protoinkButton"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="44dp"
+
+        android:text="Button" />
+
+</RelativeLayout>
+
